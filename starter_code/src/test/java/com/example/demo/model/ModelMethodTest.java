@@ -34,6 +34,7 @@ public class ModelMethodTest {
         List<Item> itemList = new ArrayList<>();
         cart.setItems(itemList);
         cart.setTotal(price);
+        assertEquals(1,user.getId());
         assertEquals("test",cart.getUser().getUsername());
         assertNotNull(cart.getId());
         assertNotNull(cart.getItems());
@@ -48,6 +49,7 @@ public class ModelMethodTest {
         BigDecimal price = new BigDecimal("1.00");
         item.setPrice(price);
         item.setDescription("test item");
+        assertNotNull(item.hashCode());
         assertEquals("test item",item.getDescription());
         assertNotNull(item.getId());
         assertNotNull(item.getName());
@@ -59,6 +61,14 @@ public class ModelMethodTest {
         UserOrder userOrder = new UserOrder();
         userOrder.setId(1L);
         userOrder.setTotal(new BigDecimal("1.00"));
+        Item item = mock(Item.class);
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+        User user = mock(User.class);
+        userOrder.setUser(user);
+        userOrder.setItems(items);
+        assertNotNull(userOrder.getUser());
+        assertNotNull(userOrder.getItems());
         assertNotNull(userOrder.getId());
         assertNotNull(userOrder.getTotal());
         CreateUserRequest createUserRequest = new CreateUserRequest();

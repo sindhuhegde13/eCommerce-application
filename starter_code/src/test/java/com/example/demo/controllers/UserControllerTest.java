@@ -47,6 +47,32 @@ public class UserControllerTest {
     }
 
     @Test
+    public void test_create_user_bad_request() {
+        CreateUserRequest createUserRequest = mock(CreateUserRequest.class);
+        when(createUserRequest.getUsername()).thenReturn("testUser");
+        when(createUserRequest.getPassword()).thenReturn("abc123");
+        when(createUserRequest.getConfirmPassword()).thenReturn("abc123");
+        Cart cart = mock(Cart.class);
+        User user = mock(User.class);
+        when(cartRepository.save(any())).thenReturn(cart);
+        when(userRepository.save(any())).thenReturn(user);
+        assertEquals(HttpStatus.BAD_REQUEST,userController.createUser(createUserRequest).getStatusCode());
+    }
+
+    @Test
+    public void test_create_user_bad_request_2() {
+        CreateUserRequest createUserRequest = mock(CreateUserRequest.class);
+        when(createUserRequest.getUsername()).thenReturn("testUser");
+        when(createUserRequest.getPassword()).thenReturn("abc123");
+        when(createUserRequest.getConfirmPassword()).thenReturn("abc1234");
+        Cart cart = mock(Cart.class);
+        User user = mock(User.class);
+        when(cartRepository.save(any())).thenReturn(cart);
+        when(userRepository.save(any())).thenReturn(user);
+        assertEquals(HttpStatus.BAD_REQUEST,userController.createUser(createUserRequest).getStatusCode());
+    }
+
+    @Test
     public void test_find_by_id() {
         User user = new User();
         user.setId(5L);
